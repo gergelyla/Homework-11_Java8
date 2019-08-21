@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -24,15 +25,63 @@ public class Main {
     public static void main(String[] args){
         String inputFilePath="src"+File.separator+"test"+ File.separator+"java"+File.separator+"java_8"+File.separator+"InputFile.txt";
         String outputFilePath="src"+File.separator+"test"+ File.separator+"java"+File.separator+"java_8"+File.separator+"OutputFile.txt";
-        int targetMonth=5;
 
         List<String> stringPersonList=new ArrayList<>();
         List<Person> personList=new ArrayList<>();
+        List<Person> listOfPersonsBornInTargetMonthOrderedAlphabetically = new ArrayList<>();
 
+        readPersonsFromFile(inputFilePath, stringPersonList, personList);
+
+        listOfPersonsBornInTargetMonthOrderedAlphabetically = filterAndSortListOfPersons(personList, listOfPersonsBornInTargetMonthOrderedAlphabetically);
+
+        writeFilteredListToFile(outputFilePath, listOfPersonsBornInTargetMonthOrderedAlphabetically);
+    }
+
+    private static void writeFilteredListToFile(String outputFilePath, List<Person> listOfPersonsBornInTargetMonthOrderedAlphabetically) {
+        if(!listOfPersonsBornInTargetMonthOrderedAlphabetically.isEmpty()) {
+            System.out.println(" ");
+            System.out.print("Writing new list to output file... ");
+            writePersonInfoToFile(outputFilePath, listOfPersonsBornInTargetMonthOrderedAlphabetically);
+            System.out.println("Done ");
+        }
+    }
+
+    private static List<Person> filterAndSortListOfPersons(List<Person> personList, List<Person> listOfPersonsBornInTargetMonthOrderedAlphabetically) {
+        boolean validMonth=false;
+        while (!validMonth) {
+            System.out.println(" ");
+            System.out.println("Enter number of month to be filtered and sorted after: ");
+            int targetMonth = userInputNr();
+            if (0 < targetMonth && targetMonth < 13) {
+                validMonth=true;
+                System.out.println("Filtering/sorting month: " + targetMonth);
+                listOfPersonsBornInTargetMonthOrderedAlphabetically = filterAndSortOutputList(targetMonth, personList);
+                if (listOfPersonsBornInTargetMonthOrderedAlphabetically.isEmpty()) {
+                    System.out.println("No person found!");
+                } else {
+                    System.out.println(" ");
+                    System.out.println("List of persons born in month " + targetMonth + " :");
+                    System.out.println("------------------------------------------------------------");
+                    for (Person person : listOfPersonsBornInTargetMonthOrderedAlphabetically) {
+                        System.out.println(person);
+                    }
+                }
+            } else {
+                System.out.println("Invalid month");
+            }
+        }
+        return listOfPersonsBornInTargetMonthOrderedAlphabetically;
+    }
+
+    private static void readPersonsFromFile(String inputFilePath, List<String> stringPersonList, List<Person> personList) {
+        System.out.println("Reading persons from file... ");
         readPersonInfoFromFile(stringPersonList,inputFilePath);
         fillListOfPersons(stringPersonList, personList);
-        List<Person> listOfPersonsBornInTargetMonthOrderedAlphabetically = filterAndSortOutputList(targetMonth, personList);
-        writePersonInfoToFile(outputFilePath, listOfPersonsBornInTargetMonthOrderedAlphabetically);
+        System.out.println("List of persons read from file: ");
+        System.out.println("------------------------------------------------------------");
+        for(Person person:personList){
+            System.out.println(person);
+        }
     }
 
     private static void writePersonInfoToFile(String outputFilePath, List<Person> listOfPersonsBornInTargetMonthOrderedAlphabetically) {
@@ -88,4 +137,9 @@ public class Main {
         return stringPersonList;
     }
 
+    public static int userInputNr() {                                                                                       //Metoda de citire Nr de la tastatura
+        Scanner input = new Scanner(System.in);
+        int value = input.nextInt();
+        return value;
+    }
 }
