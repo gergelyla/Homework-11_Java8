@@ -1,0 +1,6 @@
+Laszlo,Gergely,1980/12/22
+Ion,Popescu,1975/05/31
+Dana,Rosu,1992/03/27
+Mihai,Pop,1995/03/12
+Dumitru,Ion,2000/05/03
+Ioana,Ionescu,1985/07/12
