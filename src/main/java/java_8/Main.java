@@ -16,9 +16,9 @@ public class Main {
         PersonRepository<Person> personList=new PersonRepository<>();
         List<Person> listOfPersonsBornInTargetMonthOrderedAlphabetically = new ArrayList<>();
 
-        personList.readPersonsFromFile(inputFilePath, stringPersonList/*, personList*/);
+        personList.readPersonsFromFile(inputFilePath, stringPersonList);
 
-        listOfPersonsBornInTargetMonthOrderedAlphabetically = personList.filterAndSortListOfPersons(/*personList, */listOfPersonsBornInTargetMonthOrderedAlphabetically);
+        listOfPersonsBornInTargetMonthOrderedAlphabetically = personList.filterAndSortListOfPersons(listOfPersonsBornInTargetMonthOrderedAlphabetically);
 
         personList.writeFilteredListToFile(outputFilePath, listOfPersonsBornInTargetMonthOrderedAlphabetically);
     }

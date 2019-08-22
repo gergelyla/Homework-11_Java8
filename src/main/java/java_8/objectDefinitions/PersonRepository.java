@@ -46,9 +46,8 @@ public class PersonRepository <T extends Person>{
                     System.out.println(" ");
                     System.out.println("List of persons born in month " + targetMonth + " :");
                     System.out.println("------------------------------------------------------------");
-                    for (Person person : listOfPersonsBornInTargetMonthOrderedAlphabetically) {
-                        System.out.println(person);
-                    }
+                    listOfPersonsBornInTargetMonthOrderedAlphabetically.stream()
+                            .forEach(person->System.out.println(person));
                 }
             } else {
                 System.out.println("Invalid month");
@@ -57,7 +56,7 @@ public class PersonRepository <T extends Person>{
         return listOfPersonsBornInTargetMonthOrderedAlphabetically;
     }
 
-    public void readPersonsFromFile(String inputFilePath, List<String> stringPersonList/*, List<Person> personList*/) {
+    public void readPersonsFromFile(String inputFilePath, List<String> stringPersonList) {
         System.out.println("Reading persons from file... ");
         readPersonInfoFromFile(stringPersonList,inputFilePath);
         fillListOfPersons(stringPersonList, personList);
@@ -70,9 +69,8 @@ public class PersonRepository <T extends Person>{
 
     public void writePersonInfoToFile(String outputFilePath, List<Person> listOfPersonsBornInTargetMonthOrderedAlphabetically) {
         List<String> stringPersonListToWriteToFile=new ArrayList<>();
-        for(Person member:listOfPersonsBornInTargetMonthOrderedAlphabetically){
-            stringPersonListToWriteToFile.add(member.getFirstName()+" "+member.getLastName());
-        }
+        listOfPersonsBornInTargetMonthOrderedAlphabetically.stream()
+                .forEach(member->stringPersonListToWriteToFile.add(member.getFirstName()+" "+member.getLastName()));
         try {
             Path file = Paths.get(outputFilePath);
             Files.write(file, stringPersonListToWriteToFile, StandardCharsets.UTF_8);

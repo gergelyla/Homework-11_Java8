@@ -6,7 +6,6 @@ import org.junit.*;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class PersonRepositoryTest {
     }
 
     @Test
-    public void testFillListOfPersonsNotEmptyAfterAdding() {
+    public void testFillListOfPersons_RepoNotEmptyAfterAdding() {
         stringPersonList.add("Laszlo,Gergely,1980/12/22");
         personListRepo.fillListOfPersons(stringPersonList,personList);
         Assert.assertFalse(personList.isEmpty());
@@ -54,13 +53,13 @@ public class PersonRepositoryTest {
 
     @Test
     public void testStringToDate() {
-        LocalDate testDate = LocalDate.of(2019, 8, 21);
+        testDate = LocalDate.of(2019, 8, 21);
         String textDate="2019/08/21";
         personListRepo.stringToDate(textDate).equals(testDate);
     }
 
     @Test
-    public void testFilterOutputList() {
+    public void testFilterAndSortOutputList() {
         stringPersonList.add("Laszlo,Gergely,1980/12/22");
         stringPersonList.add("Ioana,Morar,1970/12/02");
         stringPersonList.add("Tudor,Coman,1995/03/10");
